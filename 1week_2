@@ -1,0 +1,34 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+
+def f(x, y):
+    return np.sin(np.sqrt(x ** 2 + y ** 2))
+
+x = np.linspace(-6, 6, 70)
+y = np.linspace(-6, 6, 70)
+
+X, Y = np.meshgrid(x, y)
+Z = f(X, Y)
+
+
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+surf = ax.plot_surface(X, Y, Z,          # data values (2D Arryas)
+                       rstride=2,
+                       cstride=2,
+                       cmap=cm.RdPu,
+                       linewidth=1,
+                       antialiased=True)
+ 
+ax.set_title('project')        # title
+ax.set_xlabel('x label')                             # x label
+ax.set_ylabel('y label')                             # y label
+ax.set_zlabel('z label')                             # z label
+fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
+ 
+ax.view_init(elev=30,azim=70)
+ax.dist=8
+plt.show()
