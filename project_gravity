@@ -1,0 +1,40 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+ 
+x = np.arange(-10, 10, 0.25)
+y = np.arange(-10, 10, 0.25)
+X, Y = np.meshgrid(x, y)
+Z = X**2 - Y**2 + 100 # 사람위치 받아오기
+
+x_p = int(input())
+y_p = int(input())
+z_p = (x_p)**2 - (y_p)**2 + 110
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+bx = fig.gca(projection='3d')
+px = fig.gca(projection='3d')
+ax.plot_surface(X, Y, Z,          # 1번그래프
+                       rstride=2,
+                       cstride=2,
+                       cmap=cm.RdPu,
+                       linewidth=1,
+                       antialiased=True)
+
+# bx.plot_surface(X, Y, Z/3,        # 2번그래프
+#                       rstride=2,
+#                       cstride=2,
+#                       cmap=cm.RdPu,
+#                       linewidth=1,
+#                       antialiased=True)
+
+px.scatter(x_p, y_p, z_p, c='r', marker='o') # 사람
+
+ax.contourf(X, Y, Z, zdir='z', offset=-2, cmap=plt.cm.RdPu)
+fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
+ 
+ax.view_init(elev=30,azim=70)
+ax.dist=10
+plt.show()
