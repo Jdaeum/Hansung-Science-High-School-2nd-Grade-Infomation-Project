@@ -1,19 +1,29 @@
+####################################################
+##### 이론 중력
+####################################################
 import numpy as np
+import math
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
+%matplotlib qt5
  
 x = np.arange(-10, 10, 0.25)
 y = np.arange(-10, 10, 0.25)
 X, Y = np.meshgrid(x, y)
 Z = X**2 - Y**2 + 100
+Z_B = X**2 - Y**2
 
-x_p = int(input())
-y_p = int(input())
-z_p = (x_p)**2 - (y_p)**2 + 110
+x_p = int(input('x 좌표 : '))
+y_p = int(input('y 좌표 : '))
+z_p = (x_p)**2 - (y_p)**2 + 100
+
+latitude = float(input('위도 : '))
+g_theo = 978.03267714*(1+0.00193185138639*((math.sin(latitude*math.pi/180))**2))/(((1-(0.00669437999013*(math.sin(latitude*math.pi/180)**2))))**(1/2))
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
+a_Bx = fig.gca(projection='3d')
 bx = fig.gca(projection='3d')
 px = fig.gca(projection='3d')
 surf = ax.plot_surface(X, Y, Z,          # 1번그래프
@@ -32,17 +42,71 @@ surf = ax.plot_surface(X, Y, Z,          # 1번그래프
 
 px.scatter(x_p, y_p, z_p, c='r', marker='o') # 사람
 
-# bx.plot_surface(X, Y, Z/3,        # 땅 (아직 임시 구현)
-#                       rstride=2,
-#                       cstride=2,
-#                       cmap=cm.RdPu,
-#                       linewidth=1,
-#                       antialiased=True)
+bx.plot_surface(X, Y, 0,        # 땅
+                      rstride=2,
+                      cstride=2,
+                      cmap=cm.BrBG,
+                      linewidth=1,
+                      antialiased=True)
 
-
-ax.contourf(X, Y, Z, zdir='z', offset=-2, cmap=plt.cm.copper)
 fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
  
 ax.view_init(elev=30,azim=70)
 ax.dist=10
 plt.show()
+print('표준 중력 : '+str(g_theo))
+print('높이 : '+str(z_p))
+
+####################################################
+##### 부게 이상
+####################################################
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib import cm
+%matplotlib qt5
+x_p = int(input('x 좌표 : '))
+y_p = int(input('y 좌표 : '))
+z_p = 0
+
+density = float(input('밀도 : '))
+height = ((x_p)**2 - (y_p)**2 + 100)
+bouguer_anomaly = density*0.0419*((x_p)**2 - (y_p)**2 + 100)
+
+x = np.arange(-10, 10, 0.25)
+y = np.arange(-10, 10, 0.25)
+X, Y = np.meshgrid(x, y)
+Z = X**2 - Y**2 + 100
+Z_B = X**2 - Y**2 + 100 - ((x_p)**2 - (y_p)**2 + 100)
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+a_Bx = fig.gca(projection='3d')
+bx = fig.gca(projection='3d')
+px = fig.gca(projection='3d')
+
+
+surf = ax.plot_surface(X, Y, Z_B,          # 1번그래프
+                       rstride=2,
+                       cstride=2,
+                       cmap=cm.summer,
+                       linewidth=1,
+                       antialiased=True)
+
+px.scatter(x_p, y_p, z_p, c='r', marker='o') # 사람
+
+bx.plot_surface(X, Y, 0,        # 땅
+                         rstride=2,
+                         cstride=2,
+                         cmap=cm.BrBG,
+                         linewidth=1,
+                         antialiased=True)
+
+fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
+ 
+ax.view_init(elev=30,azim=70)
+ax.dist=10
+plt.show()
+print('높이 : '+str(height))
+print('부게 이상 : '+str(bouguer_anomaly))
