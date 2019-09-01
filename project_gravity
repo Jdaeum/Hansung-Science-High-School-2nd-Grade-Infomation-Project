@@ -22,12 +22,15 @@ fig = plt.figure()
 ax = fig.gca(projection='3d')
 bx = fig.gca(projection='3d')
 px = fig.gca(projection='3d')
-surf = ax.plot_surface(X, Y, Z,          # 1번그래프
+def graph 1:
+    ax.plot_surface(X, Y, Z,          # 1번그래프
                        rstride=2,
                        cstride=2,
                        cmap=cm.summer,
                        linewidth=1,
                        antialiased=True)
+
+surf = graph1()          # 1번그래프
 
 # bx.plot_surface(X, Y, Z/3,        # 2번그래프
 #                       rstride=2,
@@ -36,14 +39,20 @@ surf = ax.plot_surface(X, Y, Z,          # 1번그래프
 #                       linewidth=1,
 #                       antialiased=True)
 
-px.scatter(x_p, y_p, z_p, c='r', marker='o') # 사람
+def hum:
+    px.scatter(x_p, y_p, z_p, c='r', marker='o')   #사람
 
-bx.plot_surface(X, Y, 0,        # 땅
+hum()
+
+def ddang:
+    bx.plot_surface(X, Y, 0,        # 땅
                       rstride=2,
                       cstride=2,
                       cmap=cm.BrBG,
                       linewidth=1,
                       antialiased=True)
+
+ddang()
 
 fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
  
@@ -81,21 +90,9 @@ ax = fig.gca(projection='3d')
 a_Bx = fig.gca(projection='3d')
 bx = fig.gca(projection='3d')
 px = fig.gca(projection='3d')
-surf = ax.plot_surface(X, Y, Z_B,          # 1번그래프
-                       rstride=2,
-                       cstride=2,
-                       cmap=cm.PiYG,
-                       linewidth=1,
-                       antialiased=True)
-
-px.scatter(x_p, y_p, 0, c='r', marker='o') # 사람
-
-bx.plot_surface(X, Y, 0,        # 땅
-                      rstride=2,
-                      cstride=2,
-                      cmap=cm.BrBG,
-                      linewidth=1,
-                      antialiased=True)
+surf = graph1() #1번 그래프
+hum() # 사람
+ddang() #땅
 
 fig.colorbar(surf, shrink=0.5, aspect=5)   # colour bar
  
@@ -141,21 +138,9 @@ cx = fig.gca(projection='3d')
 
 
 
-surf = ax.plot_surface(X, Y, Z,          # 1번그래프
-                       rstride=2,
-                       cstride=2,
-                       cmap=cm.summer,
-                       linewidth=1,
-                       antialiased=True)
-
-px.scatter(x_p, y_p, z_p, c='r', marker='o') # 사람
-
-bx.plot_surface(X, Y, 0,        # 땅
-                      rstride=2,
-                      cstride=2,
-                      cmap=cm.BrBG,
-                      linewidth=1,
-                      antialiased=True)
+surf = graph1() #그래프
+hum() # 사람
+ddang() #땅
 
 for i in range(int(z_p/10)):
     cx.plot_surface(X, Y, i*10,        # 기준면
